@@ -1,35 +1,59 @@
-require_relative 'universe'
+# Auto-generated code below aims at helping you parse
+# the standard input according to the problem statement.
 
-def success(success)
-	puts "TECHIO> success #{success}"
+ # @myStr = String.new(gets.chomp)
+@myStr = "Chuck Norris' keyboard has 2 keys: 0 and white space."
+puts @myStr
+@myStr = @myStr.reverse
+myStrLength = @myStr.length
+
+@myStrB = ""
+@myStrS = nil.to_s
+@myStrA = nil.to_s
+@myStrC = nil.to_s
+@anser = nil.to_s
+@compter = 0
+
+@controler =  @myStr.unpack('b7'* myStrLength)
+ # STDERR.puts @controler.to_s
+
+
+@myStrB = @myStrB += @myStr.unpack('b7'* myStrLength).to_s.reverse
+
+
+
+@myStrB.gsub!('"','')
+@myStrB.gsub!(' ','')
+@myStrB.gsub!('[','')
+@myStrB.gsub!(']','')
+@myStrB.gsub!(',','')
+@myStrB.downcase
+# STDERR.puts @myStrB + " " + @myStrB.length.to_s
+@compter = 0
+while @myStrB.length != 0 #tant qu'il y a des carracteres dans la chaine
+
+@current = @myStrB[0] #lit le premier carractere
+
+@current == "1" ? @anser << "0 " : @anser << "00 " #j 'ai lu un 1 j'ecrit "0 " sinon j'ecrit "00 "
+
+
+for i in 0..@myStrB.length
+
+@current == @myStrB[i] ? @compter += 1 : break
 end
 
-def msg(channel, msg)
-	puts "TECHIO> message --channel \"#{channel}\" \"#{msg}\""
+for i in 1..@compter
+@anser << "0"
+@myStrB = @myStrB.reverse.chop.reverse
 end
 
-def existsInFile(str)
-	return File.foreach("universe.rb").any?{ |l| l[str] }
+@anser << " "
+@compter = 0
+
+
+# STDERR.puts @myStrB
+# STDERR.puts @anser
+
 end
 
-universe = Universe.new
-if universe.countAllStars(150,600,27) == 777
-	success(true)
-	if existsInFile("galaxies.sum")
-		msg("My personal Yoda, you are. 🙏", "* ● ¸ .　¸. :° ☾ ° 　¸. ● ¸ .　　¸.　:. • ");
-		msg("My personal Yoda, you are. 🙏", "           　★ °  ☆ ¸. ¸ 　★　 :.　 .   ");
-		msg("My personal Yoda, you are. 🙏", "__.-._     ° . .　　　　.　☾ ° 　. *   ¸ .");
-		msg("My personal Yoda, you are. 🙏", "'-._\\7'      .　　° ☾  ° 　¸.☆  ● .　　　");
-		msg("My personal Yoda, you are. 🙏", " /'.-c    　   * ●  ¸.　　°     ° 　¸.    ");
-		msg("My personal Yoda, you are. 🙏", " |  /T      　　°     ° 　¸.     ¸ .　　  ");
-		msg("My personal Yoda, you are. 🙏", "_)_/LI");
-	else
-		msg("Kudos 🌟", "Did you know that since Ruby2.4 is out you can use the sum function? Try it!");
-		msg("Kudos 🌟", "");
-		msg("Kudos 🌟", "$totalStars = galaxies.sum");
-	end
-
-else
-	success(false)
-	msg("Oops! 🐞", "Did you properly accumulate all stars into '$totalStars'? 🤔")
-end
+ puts @anser.chop
